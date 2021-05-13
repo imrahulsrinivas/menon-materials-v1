@@ -1,0 +1,13 @@
+{% load static %}
+{% load i18n %}
+
+<nav id="sidebar" class="">
+    <div class="sidebar-header">
+        <img src="{% static 'materials/img/bootstraper-logo.png' %}" alt="bootraper logo" class="app-logo" />
+    </div>
+    <ul class="list-unstyled components text-secondary">
+	    <li>
+	        <a href={% url 'materails:employees_material_requests_simple' %}>Material requests</a>
+	    </li>
+	</ul>
+</nav>

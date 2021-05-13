@@ -1,0 +1,85 @@
+{% extends "materials/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+       <div class="table-responsive">
+            <table class="mx-auto w-auto table table-striped table-bordered table-hover dataTables-devices" id="table-items">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Id</th>
+                        <th>Material</th>
+                        <th>Required Quantity</th>
+                        <th>Required Date</th>
+                        <th>Quoted Quantity</th>
+                        <th>Quoted Date</th>
+                        <th>Quote Status</th>
+                        <th>Check Goods Delivered</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for query in mat_reqs %}
+                    <tr>
+                        {% if query.materials_supplierquotation_material_request.count > 0 %}
+                            <td>
+                                <div class="p-1 bg-success text-white text-center">Applied</div>
+                            </td>
+                        {% else %}
+                            <td>
+                                <a href={% url "materials:suppliers_apply" id=query.id %} ><button class="btn btn-primary">Apply</button></a>
+                            </td>
+                        {% endif %}
+                        <td>{{query.id}}</td>
+                        <td>{{query.material_name}}</td>
+                        <td>{{query.quantity}}</td>
+                        <td>{{query.date_required_by}}</td>
+                        {% if query.materials_supplierquotation_material_request.count > 0 %}
+                            <td>{{query.materials_supplierquotation_material_request.all.0.quantity}}</td>
+                            <td>{{query.materials_supplierquotation_material_request.all.0.date_of_supply}}</td>
+                            {% if query.materials_supplierquotation_material_request.all.0.quote_status == "approved" %}
+                                <td><div class="p-1 bg-warning text-white text-center">{{query.materials_supplierquotation_material_request.all.0.quote_status}}</div></td>
+                                <td>
+                                    <form action={% url "materials:goods_delivered" id=query.materials_supplierquotation_material_request.all.0.id %} enctype="multipart/form-data" method="POST">
+                                        {% csrf_token %}
+                                        <button class="btn btn-primary">Confirm</button>
+                                    </form>
+                                </td>
+                            {% elif query.materials_supplierquotation_material_request.all.0.quote_status == "pending" %}
+                                <td><div class="p-1 bg-secondary text-white text-center">{{query.materials_supplierquotation_material_request.all.0.quote_status}}</div></td>
+                                <td></td>
+                            {% elif query.materials_supplierquotation_material_request.all.0.quote_status == "goods_dispatched" %}
+                                <td><div class="p-1 bg-success text-white text-center">{{query.materials_supplierquotation_material_request.all.0.quote_status}}</div></td>
+                                <td></td>
+                            {% else %}
+                                <td>Error</td>
+                                <td></td>
+                            {% endif %}
+                        {% else %}
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        {% endif %}
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    let removeButton = document.getElementById('removeButton');
+    removeButton.onclick = function() {
+        let accepted = confirm("Are you sure you want to delete this?");
+        if (accepted) {
+            document.getElementById('myForm').submit();
+        }
+    }
+</script>
+{% endblock content %}

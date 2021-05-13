@@ -1,0 +1,71 @@
+{% load static %}
+{% load i18n %}
+
+<!DOCTYPE html>
+<!-- 
+* Bootstrap Simple Admin Template
+* Version: 2.0
+* Author: Alexis Luna
+* Copyright 2020 Alexis Luna
+* Website: https://github.com/alexis-luna/bootstrap-simple-admin-template
+-->
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Dashboard</title>
+    <link href="{% static 'materials/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'materials/vendor/fontawesome/css/fontawesome.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'materials/vendor/fontawesome/css/solid.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'materials/vendor/fontawesome/css/brands.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'materials/vendor/flagiconcss/css/flag-icon.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'materials/css/master.css' %}" rel="stylesheet" />
+    <link href="{% static 'materials/vendor/datatables/datatables.min.css' %}" rel="stylesheet" />
+
+    <script src="{% static 'materials/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'materials/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'materials/vendor/datatables/datatables.min.js' %}"></script>
+    <script src="{% static 'materials/vendor/jquery_form/js/jquery_form.js' %}"></script>
+</head>
+
+<body>
+    <div class="wrapper">
+        {% if type_user == "supplier" %}
+            {% include "materials/navmenu_side_suppliers.html" %}
+        {% else %}
+            {% include "materials/navmenu_side_employees.html" %}
+        {% endif %}
+        <div id="body" class="active">
+    		{% include "materials/navmenu_top.html" %}
+            <div class="content">
+                <div class="container">
+                    <div class="row">
+                        <div>
+                            {% for message in messages %}
+                              <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                                {{ message }}
+                              </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 page-header">
+                            <h2 class="page-title">{{title}}</h2>
+                        </div>
+                    </div>
+                    {% block content %}{% endblock content%}
+                </div>
+            </div>
+    	</div>
+
+	</div>
+
+    <script src="{% static 'materials/js/script.js' %}"></script>
+</body>
+
+</html>

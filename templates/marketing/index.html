@@ -1,0 +1,162 @@
+{% extends 'base.html' %} {% block title %} Marketing {% endblock %}
+{% block content %}
+
+<!-- Navbar -->
+{% include 'partials/_navbar.html' %}
+
+<div class="d-flex flex-row">
+  {% include 'partials/_marketing-sidenav.html' %}
+
+  <!-- Main Content goes here -->
+  <div id="right-side-content" class="d-flex flex-column w-100">
+    <!-- Top level cards -->
+    <div class="row mt-lg-3 mx-md-2">
+      <div class="col-lg-3">
+        <div class="card border-left-primary shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div
+                  class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+                >
+                  Daily Sales
+                </div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">50,000</div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3">
+        <div class="card border-left-warning shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div
+                  class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+                >
+                  Total Orders
+                </div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_orders }}</div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3">
+        <div class="card border-left-success shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div
+                  class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+                >
+                  Orders Pending
+                </div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                  {{ total_orders_pending }}
+                </div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3">
+        <div class="card border-left-info shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div
+                  class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+                >
+                  Orders Delivered
+                </div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                {{ total_orders_delivered }}
+                </div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mx-md-1 mt-lg-5">
+      <div class="col-md-5">
+          <h5>CUSTOMERS</h5>
+          <br />
+          <div class="card card-body shadow">
+            <a href="" class="btn btn-primary btn-sm btn-block"
+              >Create Customer</a
+            >
+            <table class="table table-sm">
+              <tr>
+                <th></th>
+                <th>Customer</th>
+                <th>Phone</th>
+              </tr>
+
+              {% for customer in customers %}
+
+                <tr>
+                  <td><a class='btn btn-info' href="#">View</a></td>
+                  <td>{{ customer.name }}</td>
+                  <td>{{ customer.phone }}</td>
+      
+                </tr>
+      
+      
+              {% endfor %}
+            </table>
+          </div>
+        </div>
+      <div class="col-md-7">
+        <h5>RECENT ORDERS</h5>
+        <br />
+        <div class="card card-body shadow">
+          <a href="#" class="btn btn-primary btn-sm btn-block">Create Order</a>
+          <table class="table table-sm">
+            <tr>
+              <th>Product</th>
+              <th>Date Ordered</th>
+              <th>Status</th>
+              <th></th>
+              <th></th>
+            </tr>
+            
+        {% for order in orders %}
+
+          <tr>
+            <td>{{ order.product }}</td>
+            <td>{{ order.date_created }}</td>
+            <td>{{ order.status }}</td>
+            <td><a class='btn btn-sm btn-info' href="#">Update</a></td>
+            <td><a class='btn btn-sm btn-danger' href="#">Delete</a></td>
+
+          </tr>
+
+
+        {% endfor %}
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,109 @@
+{% extends "materials/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+
+<div class="row justify-content-center align-items-center my-2">
+    <div class="p-2">
+        <a href="{% url "materials:employees_material_requests_simple_add" %}">
+            <button class="btn btn-primary btn-xs" title="Add" type="button" id="add-item"><i class="fa fa-plus-square">
+                </i>
+            </button>
+        </a>
+    </div>
+    <div class="p-2">
+        Add New Request
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+       <div class="table-responsive">
+            <table class="mx-auto w-auto table table-striped table-bordered table-hover dataTables-devices" id="table-items">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Status</th>
+                        <th>Material</th>
+                        <th>Quantity</th>
+                        <th>Required Date</th>
+                        <th>Created By</th>
+                        <th>Number of Suppliers Applied</th>
+                        <th>Select Supplier</th>
+                        <th>Suplier Quoted Quantity</th>
+                        <th>Suplier Quoted Delivery Date</th>
+                        <th>Suplier Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for query in mat_reqs %}
+                    <tr>
+                        <th>
+                            <form id="myForm" action={% url "materials:employees_material_requests_simple_delete" id=query.id %}  enctype="multipart/form-data" method="POST">
+                                {% csrf_token %}
+                                <button id="removeButton" class="btn btn-primary btn-sm table-remove-items" title="Delete"><i class="fa fa-trash"></i></button>
+                            </form>
+                        </th>
+                        <td>
+                            {% if query.sent_to_all_suppliers %}
+                                <div class="p-1 bg-success text-white text-center">Sent</div>
+                            {% else %}
+                                <form action={% url "materials:employees_material_requests_simple_sent_to_all_suppliers" id=query.id %}  enctype="multipart/form-data" method="POST">
+                                    {% csrf_token %}
+                                    <button class="btn btn-primary">Send to all suppliers</button>
+                                </form>
+                            {% endif %}
+    
+                        </td>
+                        <td>{{query.material_name}}</td>
+                        <td>{{query.quantity}}</td>
+                        <td>{{query.date_required_by}}</td>
+                        <td>{{query.created_by}}</td>
+                        <td>{{query.materials_supplierquotation_material_request.count}}</td>
+                        
+                        {% if query.quote_selected %}
+                            <td><div class="p-1 bg-success text-white text-center">[{{ query.quote_selected.created_by.id }}] --> {{ query.quote_selected.created_by.username }}</div></td>
+                            <td>{{query.quote_selected.quantity}}</td>
+                            <td>{{query.quote_selected.date_of_supply}}</td>
+                            {% if query.quote_selected.quote_status == "approved" %}
+                                <td><div class="p-1 bg-warning text-white text-center">{{query.quote_selected.quote_status}}</div></td>
+                            {% elif query.quote_selected.quote_status == "pending" %}
+                                <td><div class="p-1 bg-secondary text-white text-center">{{query.quote_selected.quote_status}}</div></td>
+                            {% elif query.quote_selected.quote_status == "goods_dispatched" %}
+                                <td><div class="p-1 bg-success text-white text-center">{{query.quote_selected.quote_status}}</div></td>
+                            {% else %}
+                                <td>Error</td>
+                            {% endif %}
+
+                        {% else %}
+                            <td>
+                                {% if query.sent_to_all_suppliers %}
+                                   <a href={% url 'materials:employees_material_requests_simple_select_supplier' id=query.id quotation_id=0 %}><button class="btn btn-primary">Select supplier</button></a>
+                                {% else %}
+                                    Not sent
+                                {% endif %}
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    let removeButton = document.getElementById('removeButton');
+    removeButton.onclick = function() {
+        let accepted = confirm("Are you sure you want to delete this?");
+        if (accepted) {
+            document.getElementById('myForm').submit();
+        }
+    }
+</script>
+{% endblock content %}

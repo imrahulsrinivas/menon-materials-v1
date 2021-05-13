@@ -1,0 +1,27 @@
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">Added Successfully</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+                <span class="sr-only">Chiudi</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <p class="alert alert-info">Added Successfuly</p>
+        </div><!-- /.modal-body -->
+     </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+
+<script>
+    // close the modal after 1 seconds
+    setTimeout(function() {
+        $('#modaladd').modal('hide');
+    }, 1000);
+
+    var table_devices = $('#table-items').DataTable();
+
+    table_devices.row.add({{ data|safe }}).draw()
+
+
+</script>

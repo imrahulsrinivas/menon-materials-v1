@@ -1,0 +1,31 @@
+{# Load the tag library #}
+{% load bootstrap4 %}
+
+<div class="modal-dialog">
+    <div class="modal-content animated fadeIn">
+        <form class="form" action="{% url add_url_name str_param=url_arg %}" method="post" id="add-ajax-form">
+            <div class="modal-header">
+                <h4 class="modal-title">Add {{title_form}} Data</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+			  {% csrf_token %}
+			  {% bootstrap_form form %}
+
+            </div>
+            <div class="modal-footer">
+			    {% buttons %}
+			      <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+			      <button type="submit" class="btn btn-primary">
+			        Submit
+			      </button>
+			    {% endbuttons %}
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    var form_options = { target: '#modaladd', success: function(response) {} };
+    $('#add-ajax-form').ajaxForm(form_options);
+</script>

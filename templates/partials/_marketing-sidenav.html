@@ -1,0 +1,29 @@
+<!-- Sidebar -->
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/marketing-sidenav.css' %}" />
+<div class="bg-dark border-right" id="sidebar-wrapper">
+  <div class="sidebar-heading text-warning">Marketing</div>
+  <div class="list-group list-group-flush" id="list-group-sidebar">
+    <a href="{% url 'marketing:index' %}" class="list-group-item list-group-item-action active"
+      >Dashboard</a
+    >
+    <a href="#" class="list-group-item list-group-item-action"
+      >Orders</a
+    >
+    <a href="#" class="list-group-item list-group-item-action"
+      >Shipment</a
+    >
+    <a href="#" class="list-group-item list-group-item-action"
+      >Development</a
+    >
+    <a href="#" class="list-group-item list-group-item-action"
+      >Payment</a
+    >
+    <a href="#" class="list-group-item list-group-item-action"
+      >Customers</a
+    >
+    <a href="#" class="list-group-item list-group-item-action"
+      >Reports</a
+    >
+  </div>
+</div>

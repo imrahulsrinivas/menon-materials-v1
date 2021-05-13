@@ -1,0 +1,69 @@
+{% load static %}
+<nav class="navbar navbar-dark navbar-expand-sm bg-dark mb-0">
+  <a href="{% url 'login' %}" class="navbar-brand"
+    ><img
+      class="img-responsive"
+      id="logo"
+      src="{% static 'images/menon-logo.png' %}"
+      alt="menon logo"
+  /></a>
+  <button
+    class="navbar-toggler"
+    data-toggle="collapse"
+    data-target="#navbarMenu"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarMenu">
+    <ul class="navbar-nav ml-auto" id="topNavMenu">
+      <li class="nav-item">
+        <div class="dropdown">
+          <a
+            class="nav-link px-3 dropdown-toggle"
+            href="#"
+            id="marketingDropdown"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            href="#"
+            >Marketing</a
+          >
+          <div class="dropdown-menu" aria-labelledby="marketingDropdown">
+            <a class="dropdown-item" href="#">Function 1</a>
+            <a class="dropdown-item" href="#">Function 2</a>
+            <a class="dropdown-item" href="#">Function 3</a>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item">
+        <div class="dropdown">
+          <a
+            class="nav-link px-3 dropdown-toggle"
+            href="#"
+            id="materialDropdown"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            href="#"
+            >Materials</a
+          >
+          <div class="dropdown-menu" aria-labelledby="materialDropdown">
+            <a class="dropdown-item" href="#">Function 1</a>
+            <a class="dropdown-item" href="#">Function 2</a>
+            <a class="dropdown-item" href="#">Function 3</a>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item"><a class="nav-link px-3" href="#">HR</a></li>
+      <li class="nav-item"><a class="nav-link px-3" href="#">Finance</a></li>
+      <li class="nav-item"><a class="nav-link px-3" href="#">Customer</a></li>
+      <li class="nav-item"><a class="nav-link px-3" href="#">Supplier</a></li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+      </li>
+    </ul>
+  </div>
+  mx-1
+</nav>

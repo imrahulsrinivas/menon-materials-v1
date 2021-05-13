@@ -1,0 +1,82 @@
+{% extends "materials/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+
+<div class="row justify-content-center align-items-center my-2">
+       <div class="table-responsive">
+            <table class="mx-auto w-auto table table-striped table-bordered table-hover dataTables-devices">
+                <tbody>
+                    <tr>
+                        <th>
+                            Request Id
+                        </th>
+                        <td>{{obj.id}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Material Name
+                        </th>
+                        <td>{{obj.material_name}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Required Quantity
+                        </th>
+                        <td>{{obj.quantity}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Required By
+                        </th>
+                        <td>{{obj.date_required_by}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+       <div class="table-responsive">
+            <table class="mx-auto w-auto table table-striped table-bordered table-hover dataTables-devices" id="table-items">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Supplier UserName and Id</th>
+                        <th>Quoted Quantity</th>
+                        <th>Quoted Date of Supply</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for quote in quotes %}
+                    <tr>
+                        <th>
+                            <form action={% url "materials:employees_material_requests_simple_select_supplier" id=obj.id quotation_id=quote.id%}  enctype="multipart/form-data" method="POST">
+                                {% csrf_token %}
+                                <button class="btn btn-primary">Select Supplier</button>
+                            </form>
+                        </th>
+                        <td>[{{quote.created_by.id}}] --> {{quote.created_by.username}}</td>
+                        <td>{{quote.quantity}}</td>
+                        <td>{{quote.date_of_supply}}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    let removeButton = document.getElementById('removeButton');
+    removeButton.onclick = function() {
+        let accepted = confirm("Are you sure you want to delete this?");
+        if (accepted) {
+            document.getElementById('myForm').submit();
+        }
+    }
+</script>
+{% endblock content %}

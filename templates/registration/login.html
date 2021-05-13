@@ -1,0 +1,47 @@
+{% extends 'base_login.html' %}
+{% block title %} Login {% endblock%} 
+
+
+{% block content%}
+{% include 'partials/_navbar.html' %}
+<div class="d-flex p-2 justify-content-center flex-row">
+  <h1 class="display-3 text-white">Menon Integrated Web System</h1>
+</div>
+<!-- Login Form Error Messages -->
+<div class="d-flex flex-column justify-content-center">
+  <div class="d-flex p-2 justify-content-center flex-row">
+    {% if form.errors %}
+    <p class="text-warning font-weight-bolder">
+      Your username and password didn't match. Please try again.
+    </p>
+    {% endif %} {% if next %} {% if user.is_authenticated %}
+    <p class="text-warning font-weight-bolder">
+      Your account doesn't have access to this page. To proceed, please login
+      with an account that has access.
+    </p>
+    {% else %}
+    <p class="text-warning font-weight-bolder">Please login to see this page.</p>
+    {% endif %} {% endif %}
+  </div>  
+  <!-- Login Form -->
+  <div class="d-flex p-2 justify-content-center flex-row">
+    <div class="jumbotron jumbo-big">
+      <!-- Form begins -->
+       <form method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+        <div class="form-group">{{ form.username }}</div>
+        <br />
+        <div class="form-group">{{ form.password }}</div>
+        <br />
+        <div>
+          <div class="d-md-flex p-1 justify-content-center">
+            <input type="submit" value="Login" class="btn btn-primary" />
+          </div>
+        </div>
+      </form> 
+      <!-- Form ends -->
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "materials/base.html" %}
+{% load static %}
+{% load i18n %}
+{# Load the tag library #}
+{% load bootstrap4 %}
+
+{% block content %}
+
+<div class="row justify-content-center align-items-center my-2">
+       <div class="table-responsive">
+            <table class="mx-auto w-auto table table-striped table-bordered table-hover dataTables-devices">
+                <tbody>
+                	<tr>
+                        <th>
+                        	Request Id
+                        </th>
+                        <td>{{obj.id}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                        	Material Name
+                        </th>
+                        <td>{{obj.material_name}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                        	Required Quantity
+                        </th>
+                        <td>{{obj.quantity}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                        	Required By
+                        </th>
+                        <td>{{obj.date_required_by}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+</div>
+
+<div class="row justify-content-center align-items-center my-2">
+    <form class="form" action={% url "materials:suppliers_apply" id=obj.id %} method="post">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+      <button type="submit" class="btn btn-primary">
+        Submit
+      </button>
+    </form>
+</div>
+{% endblock content %}
